@@ -57,10 +57,10 @@ class Zhihu(object):
 
 
 if __name__ == "__main__":
-    # zhihu = Zhihu()
-    # res = asyncio.run(zhihu.get())
-    # with open("Zhihu-HotList.json", 'w', encoding='utf-8') as fw:
-    #     fw.write(json.dumps(res, indent=4, ensure_ascii=False))
+    zhihu = Zhihu()
+    res = asyncio.run(zhihu.get())
+    with open("Zhihu-HotList.json", 'w', encoding='utf-8') as fw:
+        fw.write(json.dumps(res, indent=4, ensure_ascii=False))
     with open("package.json", "w", encoding='utf-8') as fw:
         fw.write(json.dumps({
             'version': NOW.strftime(r"%Y-%m-%d %H:00")
