@@ -36,6 +36,7 @@ jobs:
       - name: 创建构建
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: everyday
           name: ${{ steps.version.outputs.value }}
           body: 知乎热榜
           token: ${{ secrets.ACCESS_TOKEN }}
