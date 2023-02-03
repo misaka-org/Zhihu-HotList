@@ -29,18 +29,25 @@ jobs:
           pip install httpx[http2]
           python3 main.py
 
-      - name: 读取当前版本号
-        id: version
+      - name: 读取当前提交名
+        id: name
         uses: ashley-taylor/read-json-property-action@v1.0
         with:
           path: ./package.json
-          property: version
+          property: name
+
+      - name: 读取当前版本号
+        id: tag
+        uses: ashley-taylor/read-json-property-action@v1.0
+        with:
+          path: ./package.json
+          property: tag
 
       - name: 创建构建
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ steps.version.outputs.value }}
-          name: ${{ steps.version.outputs.value }}
+          tag_name: ${{ steps.tag.outputs.value }}
+          name: ${{ steps.name.outputs.value }}
           body: 知乎热榜
           token: ${{ secrets.ACCESS_TOKEN }}
           draft: false
