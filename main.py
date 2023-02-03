@@ -63,3 +63,4 @@ if __name__ == "__main__":
         fw.write(json.dumps({
             'version': datetime.datetime.now().strftime(r"%Y-%m-%d %H:00")
         }, indent=4, ensure_ascii=False))
+    print("Python Sucessed!")
