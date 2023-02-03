@@ -1,9 +1,11 @@
-name: Zhihu-HotList
+name: Zhihu-HotList-Auto
 
 on:
   push:
     branches:
       - main
+  schedule: # 定时任务
+    - cron: "0 * * * *"
 
 jobs:
   build:
@@ -37,7 +39,7 @@ jobs:
       - name: 创建构建
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: everyday
+          tag_name: ${{ steps.version.outputs.value }}
           name: ${{ steps.version.outputs.value }}
           body: 知乎热榜
           token: ${{ secrets.ACCESS_TOKEN }}

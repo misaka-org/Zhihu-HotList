@@ -68,6 +68,6 @@ if __name__ == "__main__":
         fw.write(json.dumps(res, indent=4, ensure_ascii=False))
     with open("package.json", "w", encoding='utf-8') as fw:
         fw.write(json.dumps({
-            'version': f"Zhihu-HotList {NOW.strftime(r'%Y-%m-%d %H:00')} {random.randint(1000,9999)}"
+            'version': f"Zhihu-HotList {NOW.strftime(r'%Y-%m-%d %H:00')}"
         }, indent=4, ensure_ascii=False))
     print(f"Python Sucessed! {NOW.strftime(r'%Y-%m-%d %H:%M:%S')}")
