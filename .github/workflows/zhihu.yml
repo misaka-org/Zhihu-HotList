@@ -35,8 +35,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          tag_name: {{steps.version.outputs.value}}
-          name: {{steps.version.outputs.value}}
+          tag_name: ${{ steps.version.outputs.value }}
+          name: ${{ steps.version.outputs.value }}
           body: 知乎热榜
           draft: false
           prerelease: false
