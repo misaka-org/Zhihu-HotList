@@ -5,6 +5,8 @@ import logging
 import httpx
 import json
 
+NOW = datetime.datetime.now()+datetime.timedelta(hours=8)
+
 
 class Zhihu(object):
     """ 知乎热榜爬虫 """
@@ -42,7 +44,7 @@ class Zhihu(object):
                     'title': value.find('div', attrs={"class": "HotList-itemTitle"}).next_element.get_text().strip(),
                     'metrics': value.find('div', attrs={"class": "HotList-itemMetrics"}).next_element.get_text().strip(),
                     'img': value.find('img').get('src') if value.find('img') else None,
-                    'time': f"数据更新时间: {datetime.datetime.now().strftime(r'%Y-%m-%d %H:%M:%S')}"
+                    'time': f"数据更新时间: {NOW.strftime(r'%Y-%m-%d %H:%M:%S')}"
                 })
             except Exception as e:
                 print(f"Error! {e} {value}")
@@ -61,6 +63,6 @@ if __name__ == "__main__":
     #     fw.write(json.dumps(res, indent=4, ensure_ascii=False))
     with open("package.json", "w", encoding='utf-8') as fw:
         fw.write(json.dumps({
-            'version': datetime.datetime.now().strftime(r"%Y-%m-%d %H:00")
+            'version': NOW.strftime(r"%Y-%m-%d %H:00")
         }, indent=4, ensure_ascii=False))
-    print("Python Sucessed!")
+    print(f"Python Sucessed! {NOW.strftime(r'%Y-%m-%d %H:%M:%S')}")
