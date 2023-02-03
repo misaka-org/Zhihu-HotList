@@ -15,10 +15,12 @@ jobs:
         with:
           ref: main
 
-      - name: 安装Python
+      - name: 安装Python, 并安装依赖
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
+        run: |
+          pip install -r requirements
 
       - name: 爬取知乎热榜
         run: |
