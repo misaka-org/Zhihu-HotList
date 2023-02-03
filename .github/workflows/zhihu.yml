@@ -1,0 +1,45 @@
+name: Zhihu-HotList
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 代码检查
+        uses: actions/checkout@v3
+        with:
+          ref: main
+
+      - name: 安装Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: 爬取知乎热榜
+        run: |
+          python3 main.py
+
+      - name: 读取当前版本号
+        id: version
+        uses: ashley-taylor/read-json-property-action@v1.0
+        with:
+          path: ./package.json
+          property: version
+
+      - name: 创建构建
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          tag_name: {{steps.version.outputs.value}}
+          name: {{steps.version.outputs.value}}
+          body: 知乎热榜
+          draft: false
+          prerelease: false
+          files: |
+            Zhihu-HotList.json
+            LICENSE
