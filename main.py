@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import datetime
 import asyncio
 import logging
+import random
 import httpx
 import json
 
@@ -39,15 +40,19 @@ class Zhihu(object):
         data = soup.find_all('a', attrs={"class": "HotList-item"})
         for value in data:
             try:
-                hotList.append({
+                hotMsg = {
                     'index': value.find('div', attrs={"class": "HotList-itemIndex"}).next_element.get_text().strip(),
                     'title': value.find('div', attrs={"class": "HotList-itemTitle"}).next_element.get_text().strip(),
                     'metrics': value.find('div', attrs={"class": "HotList-itemMetrics"}).next_element.get_text().strip(),
                     'img': value.find('img').get('src') if value.find('img') else None,
                     'time': f"数据更新时间: {NOW.strftime(r'%Y-%m-%d %H:%M:%S')}"
-                })
+                }
             except Exception as e:
-                print(f"Error! {e} {value}")
+                logging.warning(f"Error! {e} {value}")
+            else:
+                hotList.append(hotMsg)
+                print(hotMsg["title"])
+
         return hotList
 
     async def get(self):
@@ -63,6 +68,6 @@ if __name__ == "__main__":
         fw.write(json.dumps(res, indent=4, ensure_ascii=False))
     with open("package.json", "w", encoding='utf-8') as fw:
         fw.write(json.dumps({
-            'version': NOW.strftime(r"%Y-%m-%d %H:00")
+            'version': f"Zhihu-HotList {NOW.strftime(r'%Y-%m-%d %H:00')} {random.randint(1000,9999)}"
         }, indent=4, ensure_ascii=False))
     print(f"Python Sucessed! {NOW.strftime(r'%Y-%m-%d %H:%M:%S')}")
